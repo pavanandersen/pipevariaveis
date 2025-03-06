@@ -1,0 +1,31 @@
+name: Docker Build and Push
+
+on:
+  push:
+    paths:
+      - teste_site_web/**  # Verifica qualquer alteração no diretório "teste_site_web" ou seus subdiretórios
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  # Adicione suas credenciais no GitHub Secrets
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: |
+        docker build -t ivandomingues/ivan-teste:latest .
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push ivandomingues/ivan-teste:latest
