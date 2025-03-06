@@ -1,9 +1,3 @@
-name: Push the Docker image to AWS ECR Repo
-on:
-  push:
-    branches:
-      - main
-
 name: Write Number to File
 
 on: 
